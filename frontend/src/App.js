@@ -11,14 +11,16 @@ import Navigation from './components/navigation/navigation'
 function App() {
   return (
     <BrowserRouter>
-    <React.Fragment>
-      <Navigation />
-      <Switch>
-        <Redirect from='/' to='/users' exact />
-        <Route path='/users' component={userPage} />
-        <Route path='/events' component={eventPage} />
-        <Route path='/bookings' component={bookingPage} />
-      </Switch>
+      <React.Fragment>
+        <Navigation />
+        <main className='main'>
+          <Switch>
+            <Redirect from='/' to='/users' exact />
+            <Route path='/users' component={userPage} />
+            <Route path='/events' component={eventPage} />
+            <Route path='/bookings' component={bookingPage} />
+          </Switch>
+        </main>
       </React.Fragment>
     </BrowserRouter>
   );
