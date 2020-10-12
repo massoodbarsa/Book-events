@@ -1,4 +1,6 @@
 const Event = require('../../models/event');
+const User = require('../../models/user');
+
 
 const { eventCoreObj } = require('./commonObj');
   
@@ -13,19 +15,23 @@ module.exports = {
         throw err;
       }
     },
-    createEvent: async args => {
+    createEvent: async (args,req) => {
+      if (!req.isAuth) {
+        throw new Error('not authenticated')
+      }
+
       const event = new Event({
         title: args.eventInput.title,
         description: args.eventInput.description,
         price: +args.eventInput.price,
         date: new Date(args.eventInput.date),
-        creator: '5f73a65f712527081c0f328d'
+        creator: req.userId
       });
       let createdEvent;
       try {
         const result = await event.save();
         createdEvent = eventCoreObj(result);
-        const creator = await User.findById('5f73a65f712527081c0f328d');
+        const creator = await User.findById(req.userId);
   
         if (!creator) {
           throw new Error('User not found.');
