@@ -35,9 +35,15 @@
             &:hover {
                 color: rgb(165, 42, 89);
             }
+
             &:active {
                 color: rgb(240, 232, 235);
             }
+        }
+
+        a.active {
+            color: rgb(240, 232, 235);
+
         }
 
     }

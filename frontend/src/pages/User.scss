@@ -1,0 +1,52 @@
+.user-form {
+    width: 40rem;
+    max-width: 80%;
+    margin: 5rem auto;
+
+    &__control {
+        margin-bottom: 1rem;
+
+        input {
+            width: 100%;
+            display: block;
+            line-height: 20px;
+        }
+
+        label {
+            width: 100%;
+            display: block;
+            margin-bottom: 1rem;
+        }
+
+    }
+
+    &__actions {
+        button {
+            background: rgb(10, 184, 190);
+            font: inherit;
+            border: 1px solid rgb(10, 184, 190);
+            border-radius: 3px;
+            padding: .5rem 1rem;
+            margin-right: 1rem;
+            box-shadow: 1px 1px 5px rgb(77, 179, 145);
+            color: #ffffff;
+            cursor: pointer;
+
+            &:hover {
+                background: rgb(29, 150, 156);
+                border-color: rgb(29, 150, 156)
+            }
+
+            &:active {
+                background: rgb(156, 29, 145);
+                border-color: rgb(156, 29, 145)
+            }
+
+            &:focus {
+                outline: none;
+            }
+        }
+
+    }
+
+}
