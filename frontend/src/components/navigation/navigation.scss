@@ -33,7 +33,7 @@
             color: aqua;
 
             &:hover {
-                color: rgb(165, 42, 89);
+                color: #ffffff
             }
 
             &:active {
@@ -42,7 +42,10 @@
         }
 
         a.active {
-            color: rgb(240, 232, 235);
+            background-color: rgb(40, 19, 158);
+            border-radius: 3px;
+            padding: 2px 4px;
+
 
         }
 
