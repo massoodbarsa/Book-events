@@ -30,28 +30,29 @@
             margin: 0 2rem;
         }
 
-        a {
+        a,
+        button {
             text-decoration: none;
             color: aqua;
+            border: none;
+            background: none;
+            font: inherit;
+            cursor: pointer;
+
+            &:focus {
+                outline: none;
+            }
 
             &:hover {
                 color: #ffffff
             }
-
-            &:active {
-                color: rgb(240, 232, 235);
-            }
         }
 
-        a.active {
+        a.active,
+        button:active {
             background-color: rgb(40, 19, 158);
             border-radius: 3px;
             padding: 2px 4px;
-
-
         }
-
     }
-
-
 }

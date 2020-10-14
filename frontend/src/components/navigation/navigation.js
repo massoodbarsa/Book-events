@@ -10,7 +10,6 @@ const navigation = (props) => (
                 <header className='navigation'>
                     <div className='navigation__logo'>
                         <h1>Navbar</h1>
-
                     </div>
                     <div className='navigation__items'>
                         <ul>
@@ -18,6 +17,7 @@ const navigation = (props) => (
                             {!context.token && <li><NavLink to='/users'>Users</NavLink></li>}
                             <li><NavLink to='/events'>Events</NavLink></li>
                             {context.token && <li><NavLink to='/bookings'>Bookings</NavLink></li>}
+                            {context.token && <li><button onClick={context.logout}>Sign Out</button></li>}
                         </ul>
                     </div>
                 </header>

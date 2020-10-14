@@ -1,0 +1,53 @@
+.modal {
+    width: 50%;
+    background: #ffffff;
+    box-shadow: 0 2px 2px rgb(170, 221, 217);
+    position: fixed;
+    top: 20vh;
+    left: 25%;
+
+    &__header {
+        padding: 1rem;
+        background: rgb(10, 184, 190);
+
+        h1 {
+            margin: 0;
+        }
+    }
+
+    &__content {
+        padding: 1rem;
+    }
+
+    &__actions {
+        display: flex;
+        justify-content: flex-end;
+        padding: 1rem;
+    }
+
+    &__btn {
+        background: rgb(10, 184, 190);
+        font: inherit;
+        border: 1px solid rgb(10, 184, 190);
+        border-radius: 3px;
+        padding: .5rem 1rem;
+        margin-right: 1rem;
+        box-shadow: 1px 1px 5px rgb(77, 179, 145);
+        color: #ffffff;
+        cursor: pointer;
+
+        &:hover {
+            background: rgb(29, 150, 156);
+            border-color: rgb(29, 150, 156)
+        }
+
+        &:active {
+            background: rgb(156, 29, 145);
+            border-color: rgb(156, 29, 145)
+        }
+
+        &:focus {
+            outline: none;
+        }
+    }
+}
