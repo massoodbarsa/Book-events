@@ -3,13 +3,14 @@ import './Events.scss'
 import Modal from '../components/modal/modal'
 import FadeBackground from '../components/modal/fadeBackground'
 import AuthContext from '../components/authContext'
-
+import EventList from '../components/events/eventList'
+import Spinner from '../components/spinner/spinner'
 
 export default class Events extends Component {
     state = {
         created: false,
-        events: []
-
+        events: [],
+        loading: false
     }
 
     static contextType = AuthContext
@@ -45,7 +46,6 @@ export default class Events extends Component {
             return
         }
 
-        const event = { title, price, date, description }
 
         const reqBody = {
             query: `
@@ -56,10 +56,6 @@ export default class Events extends Component {
                     description
                     date
                     price
-                    creator {
-                      _id
-                      email
-                    }
                   }
                 }
               `
@@ -81,7 +77,21 @@ export default class Events extends Component {
                 return res.json()
             })
             .then(resData => {
-                this.fetchEvents()
+                this.setState(prevState => {
+                    const updatedEvents = [...prevState.events]
+                    updatedEvents.push({
+                        _id: resData.data.createEvent._id,
+                        title: resData.data.createEvent.title,
+                        description: resData.data.createEvent.description,
+                        date: resData.data.createEvent.date,
+                        price: resData.data.createEvent.price,
+                        creator: {
+                            _id: this.context.userId,
+                        }
+                    })
+                    return { events: updatedEvents }
+
+                })
             })
             .catch(err => {
                 console.log(err);
@@ -89,6 +99,9 @@ export default class Events extends Component {
     }
 
     fetchEvents = () => {
+        this.setState({
+            loading: true
+        })
         const reqBody = {
             query: `
             query  {
@@ -122,10 +135,12 @@ export default class Events extends Component {
             })
             .then(resData => {
                 const events = resData.data.events
-                this.setState({ events })
+                this.setState({ events, loading: false })
             })
             .catch(err => {
                 console.log(err);
+                this.setState({ loading: false })
+
             })
     }
 
@@ -134,11 +149,6 @@ export default class Events extends Component {
     }
 
     render() {
-        const eventsList = this.state.events.map(event => {
-            return (
-                <li key={event._id} className='events-list__item'>{event.title}</li>
-            )
-        })
         return (
             <React.Fragment>
                 {this.state.created && <FadeBackground />}
@@ -171,9 +181,8 @@ export default class Events extends Component {
                 {this.context.token && <div className='events'>
                     <button className='creatEvent-btn' onClick={this.createEventHandler}>Create Event</button>
                 </div>}
-                <ul className='events-list'>
-                    {eventsList}
-                </ul>
+                {this.state.loading ? <Spinner /> : <EventList events={this.state.events} authUserId={this.context.userId} />}
+
             </React.Fragment>
         )
     }
