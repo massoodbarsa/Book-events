@@ -6,7 +6,7 @@ const modal = props => (
     <div className='modal'>
         <header className='modal__header'><h1>{props.title}</h1></header>
         <section className='modal__content'>
-            {props.childeren}
+            {props.children}
         </section>
         <section className='modal__actions'>
             {props.isCancel && <button className='modal__btn' onClick={props.onCancel}>Cancel</button>}

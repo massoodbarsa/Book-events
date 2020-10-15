@@ -13,7 +13,6 @@ const navigation = (props) => (
                     </div>
                     <div className='navigation__items'>
                         <ul>
-                            {console.log(context.token)}
                             {!context.token && <li><NavLink to='/users'>Users</NavLink></li>}
                             <li><NavLink to='/events'>Events</NavLink></li>
                             {context.token && <li><NavLink to='/bookings'>Bookings</NavLink></li>}

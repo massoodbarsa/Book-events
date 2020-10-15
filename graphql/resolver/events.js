@@ -17,6 +17,7 @@ module.exports = {
     },
     createEvent: async (args,req) => {
       if (!req.isAuth) {
+
         throw new Error('not authenticated')
       }
 
