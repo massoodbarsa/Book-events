@@ -10,7 +10,8 @@ export default class Events extends Component {
     state = {
         created: false,
         events: [],
-        loading: false
+        loading: false,
+        selectedEvent: null
     }
 
     static contextType = AuthContext
@@ -30,7 +31,8 @@ export default class Events extends Component {
     }
     modalCancelHandler = () => {
         this.setState({
-            created: false
+            created: false,
+            selectedEvent: null
         })
     }
     modalConfirmHandler = () => {
@@ -148,16 +150,29 @@ export default class Events extends Component {
         this.fetchEvents()
     }
 
+    showDetailHandler = eventId => {
+        this.setState(prevState => {
+            const selectedEvent = prevState.events.find(e => e._id === eventId)
+            return { selectedEvent: selectedEvent }
+        })
+    }
+
+    bookEventHandler = () => {
+
+    }
+
+
     render() {
         return (
             <React.Fragment>
-                {this.state.created && <FadeBackground />}
+                {(this.state.created || this.state.selectedEvent) && <FadeBackground />}
                 { this.state.created && <Modal
                     title='Add Event'
                     isCancel
                     isConfirm
                     onCancel={this.modalCancelHandler}
                     onConfirm={this.modalConfirmHandler}
+                    confirmText='Confirm'
                 >
                     <form >
                         <div className='form-control'>
@@ -178,10 +193,35 @@ export default class Events extends Component {
                         </div>
                     </form>
                 </Modal>}
+
+                {this.state.selectedEvent && (
+                    <Modal
+                        title={this.state.selectedEvent.title}
+                        isCancel
+                        isConfirm
+                        onCancel={this.modalCancelHandler}
+                        onConfirm={this.bookEventHandler}
+                        confirmText='Book'
+
+                    >
+                        <h1>{this.state.selectedEvent.title}</h1>
+                        <h2>${this.state.selectedEvent.price}</h2>
+                        <p>{this.state.selectedEvent.description}</p>
+                        <p>{new Date(this.state.selectedEvent.date).toLocaleDateString()}</p>
+
+                    </Modal>
+                )}
+
                 {this.context.token && <div className='events'>
                     <button className='creatEvent-btn' onClick={this.createEventHandler}>Create Event</button>
                 </div>}
-                {this.state.loading ? <Spinner /> : <EventList events={this.state.events} authUserId={this.context.userId} />}
+                {this.state.loading
+                    ? <Spinner />
+                    : <EventList
+                        events={this.state.events}
+                        authUserId={this.context.userId}
+                        onViewDetail={this.showDetailHandler}
+                    />}
 
             </React.Fragment>
         )

@@ -10,7 +10,7 @@ export default function eventItem(props) {
                     <h2>${props.price}</h2>
                 </div>
                 <div>
-                    {props.userId === props.creatorId ? <p>You are the creator of this event</p> : <button>View Details</button>}
+                    {props.userId === props.creatorId ? <p>You are the creator of this event</p> : <button onClick={props.onDetail.bind(this, props.eventId)}>View Details</button>}
                 </div>
             </li>
         </div>

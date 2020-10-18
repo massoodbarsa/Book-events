@@ -13,7 +13,9 @@ export default function eventList(props) {
                 price={event.price}
                 date={event.date}
                 userId={props.authUserId}
-                creatorId={event.creator._id} />
+                creatorId={event.creator._id}
+                onDetail={props.onViewDetail}
+            />
         )
     })
     return (
