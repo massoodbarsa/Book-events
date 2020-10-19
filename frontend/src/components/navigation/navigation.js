@@ -2,6 +2,7 @@ import React from 'react'
 import { NavLink } from 'react-router-dom'
 import './navigation.scss'
 import AuthContext from '../authContext'
+import Logo from '../../assets/meteor-icon.svg'
 
 const navigation = (props) => (
     <AuthContext.Consumer>
@@ -9,7 +10,8 @@ const navigation = (props) => (
             return (
                 <header className='navigation'>
                     <div className='navigation__logo'>
-                        <h1>Navbar</h1>
+                    <img src={Logo} alt="React Logo" />
+
                     </div>
                     <div className='navigation__items'>
                         <ul>
