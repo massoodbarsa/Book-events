@@ -16,7 +16,7 @@ module.exports = {
         try {
             const bookings = await Booking.find();
             return bookings.map(booking => {
-                bookingCoreObj(booking)
+               return bookingCoreObj(booking)
             });
         } catch (err) {
             throw err;

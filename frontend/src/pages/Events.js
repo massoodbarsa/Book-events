@@ -158,7 +158,50 @@ export default class Events extends Component {
     }
 
     bookEventHandler = () => {
+        if (!this.context.token) {
+            this.setState({
+                selectedEvent: null
+            })
+            return
+        }
+        const reqBody = {
+            query: `
+            mutation  {
+                bookEvent(eventId:"${this.state.selectedEvent._id}") {
+                    _id
+                    createdAt
+                    updatedAt
+                  }
+                }
+              `
+        };
 
+        fetch('http://localhost:4000/graphql', {
+            method: 'POST',
+            body: JSON.stringify(reqBody),
+            headers: {
+                'Content-Type': 'application/json',
+                Authorization: this.context.token
+
+            }
+        })
+            .then(res => {
+                if (res.status !== 200 && res.status !== 201) {
+                    throw new Error('fetching failed kopak')
+                }
+                return res.json()
+            })
+            .then(resData => {
+                // const events = resData.data.events
+                // this.setState({ events, loading: false })
+                console.log(resData);
+                this.setState({
+                    selectedEvent: null
+                })
+            })
+            .catch(err => {
+                console.log(err);
+            })
     }
 
 
@@ -201,7 +244,7 @@ export default class Events extends Component {
                         isConfirm
                         onCancel={this.modalCancelHandler}
                         onConfirm={this.bookEventHandler}
-                        confirmText='Book'
+                        confirmText={this.context.token ? 'Book' : 'Confirm'}
 
                     >
                         <h1>{this.state.selectedEvent.title}</h1>
