@@ -7,7 +7,7 @@ export default function bookingsList(props) {
             {props.bookings.map(booking => {
                 return (
                     <li key={booking._id} className='booking-list__items'>
-                        <div className='booking-list__data'> {booking.event.title} -{' '}
+                        <div className='booking-list__data'> {booking.event.title} At {' '}
                             {new Date(booking.createdAt).toLocaleDateString()}
                         </div>
                         <div className='booking-list__action'>
