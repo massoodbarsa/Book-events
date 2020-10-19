@@ -1,0 +1,26 @@
+@import '../../pages/Events.scss';
+
+.booking-list {
+    list-style: none;
+    margin: 0 auto;
+    padding: 0;
+    width: 40rem;
+    max-width: 90%;
+
+    &__items {
+        margin: 1rem 0;
+        padding: 1rem;
+        border: 1px solid rgb(10, 184, 190);
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    &__action {
+        margin-left: 2rem;
+        button {
+            @extend .creatEvent-btn;
+
+        }
+    }
+}

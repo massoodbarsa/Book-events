@@ -14,6 +14,8 @@ export default class Events extends Component {
         selectedEvent: null
     }
 
+    isActive = true
+
     static contextType = AuthContext
 
     constructor(props) {
@@ -137,11 +139,16 @@ export default class Events extends Component {
             })
             .then(resData => {
                 const events = resData.data.events
-                this.setState({ events, loading: false })
+
+                if (this.isActive) {
+                    this.setState({ events, loading: false })
+                }
             })
             .catch(err => {
                 console.log(err);
-                this.setState({ loading: false })
+                if (this.isActive) {
+                    this.setState({ loading: false })
+                }
 
             })
     }
@@ -204,6 +211,9 @@ export default class Events extends Component {
             })
     }
 
+    componentWillUnmount() {
+        this.isActive = false
+    }
 
     render() {
         return (

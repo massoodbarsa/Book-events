@@ -13,7 +13,7 @@ const navigation = (props) => (
                     </div>
                     <div className='navigation__items'>
                         <ul>
-                            {!context.token && <li><NavLink to='/users'>Users</NavLink></li>}
+                            {!context.token && <li><NavLink to='/users'>Log in</NavLink></li>}
                             <li><NavLink to='/events'>Events</NavLink></li>
                             {context.token && <li><NavLink to='/bookings'>Bookings</NavLink></li>}
                             {context.token && <li><button onClick={context.logout}>Sign Out</button></li>}

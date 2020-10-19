@@ -1,6 +1,8 @@
 import React, { Component } from 'react'
 import AuthContext from '../components/authContext'
 import Spinner from '../components/spinner/spinner'
+import './bookings.scss'
+import BookingsList from '../components/bookings/bookingsList'
 
 export default class Bookings extends Component {
 
@@ -35,7 +37,7 @@ export default class Bookings extends Component {
             body: JSON.stringify(requestBody),
             headers: {
                 'Content-Type': 'application/json',
-                Authorization:  this.context.token
+                Authorization: this.context.token
             }
         })
             .then(res => {
@@ -46,8 +48,6 @@ export default class Bookings extends Component {
                 return res.json();
             })
             .then(resData => {
-                console.log(resData);
-
                 const bookings = resData.data.bookings;
                 this.setState({ bookings: bookings, isLoading: false })
             })
@@ -61,22 +61,59 @@ export default class Bookings extends Component {
         this.fetchBookings()
     }
 
+    handleDeleteBooking = bookingId => {
+        this.setState({ isLoading: true });
+        const requestBody = {
+            query: `
+          mutation {
+            cancelBooking(bookingId:"${bookingId}") {
+              _id
+              title
+            }
+          }
+        `
+        };
+
+        fetch('http://localhost:4000/graphql', {
+            method: 'POST',
+            body: JSON.stringify(requestBody),
+            headers: {
+                'Content-Type': 'application/json',
+                Authorization: this.context.token
+            }
+        })
+            .then(res => {
+                if (res.status !== 200 && res.status !== 201) {
+                    throw new Error('Failed!');
+                }
+
+                return res.json();
+            })
+            .then(resData => {
+
+                this.setState(prevState => {
+                    const updatedBookings = prevState.bookings.filter(booking => {
+                        return booking._id !== bookingId
+                    })
+                    return { bookings: updatedBookings, isLoading: false }
+
+                })
+            })
+            .catch(err => {
+                console.log(err);
+                this.setState({ isLoading: false });
+            });
+    }
+
     render() {
         return (
             <React.Fragment>
-            {this.state.isLoading ? (
-              <Spinner />
-            ) : (
-              <ul>
-                {this.state.bookings.map(booking => (
-                  <li key={booking._id}>
-                    {booking.event.title} -{' '}
-                    {new Date(booking.createdAt).toLocaleDateString()}
-                  </li>
-                ))}
-              </ul>
-            )}
-          </React.Fragment>
+                {this.state.isLoading ? (
+                    <Spinner />
+                ) : (
+                        <BookingsList bookings={this.state.bookings} onDelete={this.handleDeleteBooking} />
+                    )}
+            </React.Fragment>
         )
     }
 }
