@@ -1,7 +1,7 @@
 {
     "env":{
-        "USER":"massoodbarsa",
-        "PASSWORD":"Shajarian1359",
-        "DB":"graphql-example"
+        "USER":"",
+        "PASSWORD":"",
+        "DB":""
     }
 }
